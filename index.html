@@ -5,26 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LogicPlace AssetOS</title>
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link id="manifest-link" rel="manifest" href="">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         :root {
-            --bg-color: #f2f4f7;
-            --text-main: #1d1d1f;
-            --text-sec: #86868b;
-            --glass-bg: rgba(255, 255, 255, 0.65);
-            --glass-border: rgba(255, 255, 255, 0.5);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
-            --success: #34c759;
-            --danger: #ff3b30;
-            --warning: #ff9500;
-            --info: #007aff;
-            --sold: #1c1c1e;
-            --accent: #000000;
-            --radius: 20px;
+            /* Estética Dark Luxury & Minimalista */
+            --bg-color: #000000;
+            --text-main: #ffffff;
+            --text-sec: #a1a1aa;
+            
+            /* Liquid Glassmorphism Avançado */
+            --glass-bg: rgba(20, 20, 24, 0.45);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+            --glass-blur: blur(40px);
+            
+            /* Detalhes em Neon */
+            --success: #39ff14; /* Verde Neon */
+            --danger: #ff2a2a;
+            --warning: #ffea00;
+            --info: #00f0ff;    /* Ciano Neon */
+            --sold: #b026ff;    /* Roxo Neon */
+            
+            --accent: #ffffff;
+            --accent-text: #000000;
+            --radius: 24px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -37,17 +45,22 @@
             height: 100vh;
         }
 
-        /* Background Shapes for Glassmorphism */
-        .bg-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
-        .shape { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; }
-        .shape-1 { top: -10%; left: -10%; width: 40vw; height: 40vw; background: rgba(0, 122, 255, 0.15); }
-        .shape-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: rgba(52, 199, 89, 0.1); }
+        /* Ocultar barra de rolagem para um visual mais limpo */
+        ::-webkit-scrollbar { display: none; }
 
-        /* Glass Utility */
+        /* Background Shapes for Liquid Glass (Orbs em movimento suave) */
+        .bg-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; overflow: hidden; pointer-events: none; }
+        .shape { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.5; animation: floatOrb 20s infinite ease-in-out alternate; }
+        .shape-1 { top: -10%; left: -10%; width: 45vw; height: 45vw; background: rgba(176, 38, 255, 0.15); } /* Reflexo Roxo */
+        .shape-2 { bottom: -10%; right: -10%; width: 55vw; height: 55vw; background: rgba(0, 240, 255, 0.15); } /* Reflexo Ciano */
+        
+        @keyframes floatOrb { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.2) translate(50px, 50px); } }
+
+        /* Glass Utility - Refinado */
         .glass {
             background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
             border: 1px solid var(--glass-border);
             border-radius: var(--radius);
             box-shadow: var(--glass-shadow);
@@ -55,128 +68,155 @@
 
         /* Layout */
         .sidebar {
-            width: 260px; height: 100%; padding: 30px 20px;
+            width: 280px; height: 100%; padding: 40px 24px;
             display: flex; flex-direction: column;
-            border-right: 1px solid rgba(0,0,0,0.05);
-            background: rgba(255,255,255,0.4);
-            backdrop-filter: blur(10px);
+            border-right: 1px solid var(--glass-border);
+            background: rgba(10, 10, 12, 0.4);
+            backdrop-filter: var(--glass-blur);
             z-index: 10;
         }
         
-        .brand { margin-bottom: 40px; }
-        .brand h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.5px; }
-        .brand p { font-size: 11px; color: var(--text-sec); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+        .brand { margin-bottom: 50px; }
+        .brand h1 { font-size: 24px; font-weight: 700; letter-spacing: -1px; }
+        .brand p { font-size: 11px; color: var(--text-sec); font-weight: 500; text-transform: uppercase; letter-spacing: 2px; margin-top: 6px; }
         
-        .nav-items { display: flex; flex-direction: column; gap: 10px; }
+        .nav-items { display: flex; flex-direction: column; gap: 12px; }
         .nav-item {
-            padding: 12px 16px; border-radius: 12px; cursor: pointer;
-            display: flex; align-items: center; gap: 12px; font-weight: 500;
-            color: var(--text-sec); transition: 0.3s;
+            padding: 14px 18px; border-radius: 16px; cursor: pointer;
+            display: flex; align-items: center; gap: 14px; font-weight: 500;
+            color: var(--text-sec); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .nav-item:hover, .nav-item.active { background: rgba(0,0,0,0.04); color: var(--text-main); }
-        .nav-item.active { background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: var(--text-main); }
+        .nav-item.active { background: var(--accent); color: var(--accent-text); box-shadow: 0 4px 20px rgba(255,255,255,0.15); }
 
         .main-content {
-            flex: 1; height: 100%; overflow-y: auto; padding: 40px; padding-bottom: 100px;
+            flex: 1; height: 100%; overflow-y: auto; padding: 50px; padding-bottom: 120px;
         }
 
-        .view { display: none; animation: fadeIn 0.4s ease; }
+        .view { display: none; animation: fadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
         .view.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Typography */
-        h2.view-title { font-size: 28px; font-weight: 700; letter-spacing: -1px; margin-bottom: 5px; }
-        p.view-sub { color: var(--text-sec); margin-bottom: 30px; font-size: 14px; }
+        h2.view-title { font-size: 32px; font-weight: 700; letter-spacing: -1.5px; margin-bottom: 8px; }
+        p.view-sub { color: var(--text-sec); margin-bottom: 40px; font-size: 15px; font-weight: 300; }
 
         /* Dashboard Cards */
-        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .stat-card { padding: 24px; display: flex; flex-direction: column; gap: 8px; }
-        .stat-label { font-size: 13px; color: var(--text-sec); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
-        .stat-value { font-size: 28px; font-weight: 700; letter-spacing: -1px; }
-        .val-positive { color: var(--success); }
+        .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-bottom: 40px; }
+        .stat-card { padding: 28px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.3s ease; }
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-label { font-size: 12px; color: var(--text-sec); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+        .stat-value { font-size: 32px; font-weight: 700; letter-spacing: -1.5px; }
+        .val-positive { color: var(--success); text-shadow: 0 0 15px rgba(57, 255, 20, 0.3); }
         
         /* Assets List */
-        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
-        .search-bar { padding: 12px 20px; border-radius: 100px; border: none; outline: none; width: 300px; font-size: 14px; }
-        .btn { padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-primary { background: var(--accent); color: white; }
-        .btn-primary:active { transform: scale(0.96); }
-        .btn-secondary { background: rgba(0,0,0,0.05); color: var(--text-main); }
+        .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-wrap: wrap; gap: 20px; }
+        .search-bar { padding: 14px 24px; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03); color: white; outline: none; width: 320px; font-size: 15px; transition: 0.3s; }
+        .search-bar:focus { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+        .search-bar::placeholder { color: var(--text-sec); }
         
-        .assets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-        .asset-card { padding: 20px; cursor: pointer; transition: 0.3s; position: relative; }
-        .asset-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
-        .asset-img { width: 100%; height: 160px; object-fit: cover; border-radius: 12px; margin-bottom: 15px; background: #eee; }
-        .asset-id { font-size: 11px; color: var(--text-sec); font-weight: 600; margin-bottom: 4px; }
-        .asset-name { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
-        .asset-specs { font-size: 13px; color: var(--text-sec); margin-bottom: 15px; }
+        .btn { padding: 14px 28px; border-radius: 100px; border: none; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); display: inline-flex; align-items: center; gap: 10px; justify-content: center; }
+        .btn-primary { background: var(--accent); color: var(--accent-text); box-shadow: 0 4px 15px rgba(255,255,255,0.1); }
+        .btn-primary:active { transform: scale(0.95); }
+        .btn-secondary { background: rgba(255,255,255,0.08); color: var(--text-main); border: 1px solid var(--glass-border); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.12); }
         
-        .status-chip { display: inline-block; padding: 4px 10px; border-radius: 100px; font-size: 11px; font-weight: 600; margin-bottom: 15px; }
-        .status-comprado { background: rgba(255, 149, 0, 0.15); color: var(--warning); }
-        .status-reparo { background: rgba(0, 122, 255, 0.15); color: var(--info); }
-        .status-pronto { background: rgba(52, 199, 89, 0.15); color: var(--success); }
-        .status-vendido { background: rgba(28, 28, 30, 0.15); color: var(--sold); }
+        .assets-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+        .asset-card { padding: 24px; cursor: pointer; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden; }
+        .asset-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+        .asset-img { width: 100%; height: 180px; object-fit: cover; border-radius: 16px; margin-bottom: 20px; background: rgba(255,255,255,0.05); }
+        .asset-id { font-size: 11px; color: var(--text-sec); font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+        .asset-name { font-size: 20px; font-weight: 600; margin-bottom: 6px; letter-spacing: -0.5px; }
+        .asset-specs { font-size: 14px; color: var(--text-sec); margin-bottom: 18px; font-weight: 300; }
+        
+        .status-chip { display: inline-flex; align-items: center; padding: 6px 14px; border-radius: 100px; font-size: 11px; font-weight: 700; margin-bottom: 18px; letter-spacing: 0.5px; text-transform: uppercase; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+        .status-comprado { color: var(--warning); border-color: rgba(255, 234, 0, 0.3); }
+        .status-reparo { color: var(--info); border-color: rgba(0, 240, 255, 0.3); }
+        .status-pronto { color: var(--success); border-color: rgba(57, 255, 20, 0.3); }
+        .status-vendido { color: var(--sold); border-color: rgba(176, 38, 255, 0.3); }
 
-        .fin-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 6px; border-bottom: 1px solid rgba(0,0,0,0.03); padding-bottom: 6px; }
+        .fin-row { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; color: var(--text-sec); }
         .fin-row:last-child { border: none; margin-bottom: 0; padding-bottom: 0; }
-        .fin-row span:last-child { font-weight: 600; }
+        .fin-row span:last-child { font-weight: 600; color: var(--text-main); }
 
         /* Kanban Operations */
-        .kanban-board { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; min-height: 60vh; }
-        .kanban-col { flex: 0 0 300px; display: flex; flex-direction: column; gap: 15px; }
-        .k-header { font-size: 14px; font-weight: 600; padding-bottom: 10px; border-bottom: 2px solid rgba(0,0,0,0.05); }
+        .kanban-board { display: flex; gap: 24px; overflow-x: auto; padding-bottom: 30px; min-height: 60vh; scroll-snap-type: x mandatory; }
+        .kanban-col { flex: 0 0 320px; display: flex; flex-direction: column; gap: 16px; scroll-snap-align: start; }
+        .k-header { font-size: 15px; font-weight: 600; padding-bottom: 12px; border-bottom: 2px solid rgba(255,255,255,0.05); color: var(--text-sec); letter-spacing: 0.5px; text-transform: uppercase; }
         
         /* Modals & Forms */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.3); backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: 0.3s; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); display: none; justify-content: center; align-items: center; z-index: 100; opacity: 0; transition: all 0.4s ease; }
         .modal-overlay.active { display: flex; opacity: 1; }
-        .modal-content { background: rgba(255,255,255,0.9); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 30px; border-radius: var(--radius); border: 1px solid white; box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
+        .modal-content { background: rgba(15, 15, 18, 0.85); width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; padding: 40px; border-radius: 32px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 40px 80px rgba(0,0,0,0.8); position: relative; }
         
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-sec); margin-bottom: 6px; }
-        .form-control { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid rgba(0,0,0,0.1); background: rgba(255,255,255,0.5); outline: none; font-size: 14px; transition: 0.2s; }
-        .form-control:focus { border-color: var(--accent); background: white; }
-        .form-row { display: flex; gap: 15px; }
+        /* Indicador de Drag para Mobile */
+        .modal-drag-handle { display: none; width: 40px; height: 5px; background: rgba(255,255,255,0.2); border-radius: 10px; margin: 0 auto 30px auto; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-sec); margin-bottom: 8px; letter-spacing: 0.5px; }
+        .form-control { width: 100%; padding: 16px 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); background: rgba(0,0,0,0.5); color: white; outline: none; font-size: 15px; transition: 0.3s; }
+        .form-control:focus { border-color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.8); box-shadow: 0 0 15px rgba(255,255,255,0.05); }
+        .form-row { display: flex; gap: 20px; }
         .form-row > * { flex: 1; }
 
         /* Asset Detail View */
-        .detail-header { display: flex; gap: 30px; margin-bottom: 40px; align-items: flex-start; flex-wrap: wrap; }
-        .detail-img { width: 300px; height: 300px; object-fit: cover; border-radius: 24px; box-shadow: var(--glass-shadow); }
+        .detail-header { display: flex; gap: 40px; margin-bottom: 40px; align-items: flex-start; flex-wrap: wrap; }
+        .detail-img { width: 320px; height: 320px; object-fit: cover; border-radius: 28px; box-shadow: 0 20px 40px rgba(0,0,0,0.5); border: 1px solid var(--glass-border); }
         .detail-info { flex: 1; min-width: 300px; }
-        .tabs { display: flex; gap: 20px; border-bottom: 1px solid rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .tab { padding: 10px 0; font-size: 14px; font-weight: 600; color: var(--text-sec); cursor: pointer; position: relative; }
+        .tabs { display: flex; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 30px; }
+        .tab { padding: 12px 0; font-size: 15px; font-weight: 600; color: var(--text-sec); cursor: pointer; position: relative; transition: 0.3s; }
+        .tab:hover { color: white; }
         .tab.active { color: var(--text-main); }
-        .tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--accent); }
+        .tab.active::after { content: ''; position: absolute; bottom: -1px; left: 0; width: 100%; height: 2px; background: var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
         
-        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content { display: none; animation: fadeIn 0.4s; }
         .tab-content.active { display: block; }
 
-        .timeline { border-left: 2px solid rgba(0,0,0,0.1); margin-left: 10px; padding-left: 20px; }
-        .t-item { position: relative; margin-bottom: 25px; }
-        .t-item::before { content: ''; position: absolute; left: -26px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); }
-        .t-date { font-size: 11px; color: var(--text-sec); font-weight: 600; margin-bottom: 4px; }
-        .t-title { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
-        .t-desc { font-size: 13px; color: var(--text-sec); line-height: 1.5; }
+        .timeline { border-left: 2px solid rgba(255,255,255,0.1); margin-left: 10px; padding-left: 30px; }
+        .t-item { position: relative; margin-bottom: 30px; }
+        .t-item::before { content: ''; position: absolute; left: -36px; top: 0; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .t-date { font-size: 12px; color: var(--text-sec); font-weight: 700; margin-bottom: 6px; letter-spacing: 1px; }
+        .t-title { font-size: 16px; font-weight: 600; margin-bottom: 6px; }
+        .t-desc { font-size: 14px; color: var(--text-sec); line-height: 1.6; font-weight: 300; }
 
         /* Cost Table */
-        .cost-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .cost-item { display: flex; justify-content: space-between; padding: 12px 16px; background: rgba(0,0,0,0.02); border-radius: 12px; font-size: 14px; }
+        .cost-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        .cost-item { display: flex; justify-content: space-between; padding: 16px 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.03); border-radius: 16px; font-size: 15px; align-items: center; }
         
-        /* Mobile Bottom Nav */
-        .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(255,255,255,0.85); backdrop-filter: blur(20px); border-top: 1px solid rgba(0,0,0,0.05); z-index: 50; padding-bottom: env(safe-area-inset-bottom); }
-        .bottom-nav-inner { display: flex; justify-content: space-around; padding: 10px 0; }
-        .b-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-sec); font-size: 10px; font-weight: 500; cursor: pointer; }
-        .b-nav-item i { font-size: 20px; }
-        .b-nav-item.active { color: var(--accent); }
+        /* Mobile Bottom Nav - Adapatado estilo app nativo */
+        .bottom-nav { display: none; position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 10, 12, 0.75); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-top: 1px solid rgba(255,255,255,0.05); z-index: 50; padding-bottom: env(safe-area-inset-bottom, 15px); }
+        .bottom-nav-inner { display: flex; justify-content: space-around; padding: 12px 0 8px 0; }
+        .b-nav-item { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-sec); font-size: 11px; font-weight: 600; cursor: pointer; transition: 0.3s; width: 25%; }
+        .b-nav-item i { font-size: 22px; margin-bottom: 2px; }
+        .b-nav-item.active { color: var(--accent); text-shadow: 0 0 15px rgba(255,255,255,0.3); }
 
+        /* Responsividade Extrema para Mobile */
         @media (max-width: 768px) {
             .sidebar { display: none; }
             .bottom-nav { display: block; }
-            .main-content { padding: 20px; padding-bottom: 100px; }
-            .grid-4 { grid-template-columns: 1fr 1fr; }
-            .header-actions { flex-direction: column; align-items: stretch; }
+            .main-content { padding: 24px 20px; padding-bottom: 120px; }
+            
+            .grid-4 { grid-template-columns: 1fr; gap: 16px; margin-bottom: 30px; }
+            .header-actions { flex-direction: column; align-items: stretch; gap: 16px; }
             .search-bar { width: 100%; }
-            .detail-img { width: 100%; height: 250px; }
+            .detail-header { gap: 24px; }
+            .detail-img { width: 100%; height: 300px; }
+            
+            /* Bottom Sheet Modals no Mobile */
+            .modal-overlay { align-items: flex-end; }
+            .modal-content {
+                max-width: 100%;
+                border-radius: 32px 32px 0 0;
+                padding: 30px 24px;
+                padding-bottom: env(safe-area-inset-bottom, 40px);
+                border-bottom: none;
+                animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            }
+            .modal-drag-handle { display: block; }
+            .form-row { flex-direction: column; gap: 0; }
         }
+
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -226,8 +266,8 @@
                 </div>
             </div>
 
-            <h3 style="margin: 30px 0 15px 0; font-size: 18px;">Resumo Operacional</h3>
-            <div class="glass" style="padding: 20px; display: flex; gap: 20px; flex-wrap: wrap;" id="dash-status-summary">
+            <h3 style="margin: 40px 0 20px 0; font-size: 20px; font-weight: 600;">Resumo Operacional</h3>
+            <div class="glass" style="padding: 24px; display: flex; gap: 20px; flex-wrap: wrap;" id="dash-status-summary">
                 <!-- Injected via JS -->
             </div>
         </section>
@@ -239,9 +279,9 @@
                     <h2 class="view-title">Ativos</h2>
                     <p class="view-sub">Gestão de patrimônio em hardware.</p>
                 </div>
-                <div style="display: flex; gap: 10px;">
+                <div style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%; justify-content: flex-end;">
                     <input type="text" class="search-bar glass" placeholder="Buscar modelo, Logic ID..." oninput="filterAssets(this.value)">
-                    <button class="btn btn-primary" onclick="openModal('modal-add-asset')"><i class="fa-solid fa-plus"></i> Novo ativo</button>
+                    <button class="btn btn-primary" style="flex-grow: 1; max-width: 200px;" onclick="openModal('modal-add-asset')"><i class="fa-solid fa-plus"></i> Novo ativo</button>
                 </div>
             </div>
             <div class="assets-grid" id="assets-container">
@@ -261,7 +301,7 @@
 
         <!-- DETALHE DO ATIVO -->
         <section id="view-asset-detail" class="view">
-            <button class="btn btn-secondary" style="margin-bottom: 20px; padding: 8px 16px;" onclick="nav('assets')"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
+            <button class="btn btn-secondary" style="margin-bottom: 24px; padding: 10px 20px;" onclick="nav('assets')"><i class="fa-solid fa-arrow-left"></i> Voltar</button>
             <div id="detail-container">
                 <!-- Injected via JS -->
             </div>
@@ -272,15 +312,15 @@
             <h2 class="view-title">Configurações</h2>
             <p class="view-sub">Gerencie os dados do LogicPlace AssetOS.</p>
             
-            <div class="glass" style="padding: 30px; max-width: 500px;">
-                <h3 style="margin-bottom: 20px;">Banco de Dados Local</h3>
-                <div style="display: flex; gap: 10px; flex-direction: column;">
+            <div class="glass" style="padding: 40px; max-width: 500px;">
+                <h3 style="margin-bottom: 24px; font-weight: 600;">Banco de Dados Local</h3>
+                <div style="display: flex; gap: 16px; flex-direction: column;">
                     <button class="btn btn-primary" onclick="exportData()"><i class="fa-solid fa-download"></i> Exportar Backup (JSON)</button>
                     <label class="btn btn-secondary" style="text-align: center;">
                         <i class="fa-solid fa-upload"></i> Importar Backup
                         <input type="file" style="display: none;" accept=".json" onchange="importData(event)">
                     </label>
-                    <button class="btn btn-secondary" style="color: var(--danger); margin-top: 20px;" onclick="clearData()"><i class="fa-solid fa-trash"></i> Resetar Aplicativo</button>
+                    <button class="btn btn-secondary" style="color: var(--danger); margin-top: 24px; border-color: rgba(255,42,42,0.3);" onclick="clearData()"><i class="fa-solid fa-trash"></i> Resetar Aplicativo</button>
                 </div>
             </div>
         </section>
@@ -300,11 +340,12 @@
     <!-- MODAL: ADD ASSET -->
     <div class="modal-overlay" id="modal-add-asset">
         <div class="modal-content glass">
-            <h3 style="margin-bottom: 20px; font-size: 20px;">Cadastrar Novo Ativo</h3>
+            <div class="modal-drag-handle"></div>
+            <h3 style="margin-bottom: 24px; font-size: 22px;">Cadastrar Novo Ativo</h3>
             <form id="form-add-asset" onsubmit="saveNewAsset(event)">
                 <div class="form-group">
                     <label>Foto do Produto (Câmera ou Galeria)</label>
-                    <input type="file" id="asset-photo" class="form-control" accept="image/*" style="background: white;">
+                    <input type="file" id="asset-photo" class="form-control" accept="image/*" style="padding: 12px;">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -323,7 +364,7 @@
                     </div>
                     <div class="form-group">
                         <label>Data de Aquisição</label>
-                        <input type="date" id="asset-date" class="form-control" required>
+                        <input type="date" id="asset-date" class="form-control" required style="color-scheme: dark;">
                     </div>
                 </div>
                 <div class="form-row">
@@ -340,7 +381,7 @@
                     <label>Descrição / Defeitos Iniciais</label>
                     <textarea id="asset-desc" class="form-control" rows="3"></textarea>
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div style="display: flex; gap: 16px; margin-top: 30px;">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('modal-add-asset')">Cancelar</button>
                     <button type="submit" class="btn btn-primary" style="flex:1;">Salvar Ativo</button>
                 </div>
@@ -350,13 +391,14 @@
 
     <!-- MODAL: ADD COST -->
     <div class="modal-overlay" id="modal-add-cost">
-        <div class="modal-content glass" style="max-width: 400px;">
-            <h3 style="margin-bottom: 20px;">Adicionar Gasto/Reparo</h3>
+        <div class="modal-content glass" style="max-width: 450px;">
+            <div class="modal-drag-handle"></div>
+            <h3 style="margin-bottom: 24px; font-size: 22px;">Adicionar Gasto/Reparo</h3>
             <form id="form-add-cost" onsubmit="saveCost(event)">
                 <input type="hidden" id="cost-asset-id">
                 <div class="form-group">
                     <label>Categoria/Peça</label>
-                    <select id="cost-desc" class="form-control" required>
+                    <select id="cost-desc" class="form-control" required style="appearance: none;">
                         <option>Tela</option>
                         <option>Bateria</option>
                         <option>Placa</option>
@@ -371,9 +413,9 @@
                     <label>Valor (R$)</label>
                     <input type="number" step="0.01" id="cost-val" class="form-control" required>
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div style="display: flex; gap: 16px; margin-top: 30px;">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('modal-add-cost')">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" style="flex:1;">Adicionar</button>
+                    <button type="submit" class="btn btn-primary" style="flex:1;">Adicionar Gasto</button>
                 </div>
             </form>
         </div>
@@ -381,8 +423,9 @@
 
     <!-- MODAL: REGISTER SALE -->
     <div class="modal-overlay" id="modal-register-sale">
-        <div class="modal-content glass" style="max-width: 400px;">
-            <h3 style="margin-bottom: 20px;">Registrar Venda</h3>
+        <div class="modal-content glass" style="max-width: 450px;">
+            <div class="modal-drag-handle"></div>
+            <h3 style="margin-bottom: 24px; font-size: 22px;">Registrar Venda</h3>
             <form id="form-sale" onsubmit="saveSale(event)">
                 <input type="hidden" id="sale-asset-id">
                 <div class="form-group">
@@ -391,16 +434,16 @@
                 </div>
                 <div class="form-group">
                     <label>Canal de Venda</label>
-                    <select id="sale-channel" class="form-control">
+                    <select id="sale-channel" class="form-control" style="appearance: none;">
                         <option>Venda Direta / WhatsApp</option>
                         <option>OLX</option>
                         <option>Mercado Livre</option>
                         <option>Instagram</option>
                     </select>
                 </div>
-                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                <div style="display: flex; gap: 16px; margin-top: 30px;">
                     <button type="button" class="btn btn-secondary" onclick="closeModal('modal-register-sale')">Cancelar</button>
-                    <button type="submit" class="btn btn-primary" style="flex:1; background: var(--sold);">Confirmar Venda</button>
+                    <button type="submit" class="btn btn-primary" style="flex:1; background: var(--sold); color: white;">Confirmar Venda</button>
                 </div>
             </form>
         </div>
@@ -413,8 +456,8 @@
             short_name: "AssetOS",
             start_url: ".",
             display: "standalone",
-            background_color: "#f2f4f7",
-            theme_color: "#ffffff",
+            background_color: "#000000",
+            theme_color: "#000000",
             icons: [{ src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23000' rx='20'/%3E%3Ctext x='50' y='65' font-size='50' fill='%23fff' text-anchor='middle' font-family='sans-serif'%3ELP%3C/text%3E%3C/svg%3E", sizes: "192x192", type: "image/svg+xml" }]
         };
         document.getElementById('manifest-link').href = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type: 'application/json'}));
@@ -422,7 +465,7 @@
         // --- DATA & STATE ---
         const STATUS_OPTIONS = ["Comprado", "Em diagnóstico", "Em reparo", "Pronto para venda", "Vendido"];
         const STATUS_COLORS = { "Comprado": "status-comprado", "Em diagnóstico": "status-reparo", "Em reparo": "status-reparo", "Pronto para venda": "status-pronto", "Vendido": "status-vendido" };
-        const DEFAULT_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 100'%3E%3Crect width='100%25' height='100%25' fill='%23e0e0e0'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23888' font-family='sans-serif'%3ESem Foto%3C/text%3E%3C/svg%3E";
+        const DEFAULT_IMG = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 100 100'%3E%3Crect width='100%25' height='100%25' fill='%23222'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23666' font-family='sans-serif'%3ESem Foto%3C/text%3E%3C/svg%3E";
 
         let db = JSON.parse(localStorage.getItem('logicplace_db')) || {
             assets: [
@@ -468,9 +511,11 @@
             document.querySelectorAll('.nav-item, .b-nav-item').forEach(el => el.classList.remove('active'));
             document.getElementById(`view-${viewId}`).classList.add('active');
             
-            // Highlight navs
             document.querySelectorAll(`[onclick="nav('${viewId}')"]`).forEach(el => el.classList.add('active'));
             if(viewId !== 'asset-detail') updateApp();
+            
+            // Scroll top in mobile
+            window.scrollTo(0,0);
         }
 
         // --- UI UPDATES ---
@@ -505,8 +550,8 @@
             let sumHtml = '';
             for(let st in statusCount) {
                 if(statusCount[st] > 0) {
-                    sumHtml += `<div style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:500;">
-                                  <span class="status-chip ${STATUS_COLORS[st]}" style="margin:0">${st}</span> ${statusCount[st]}
+                    sumHtml += `<div style="display:flex; align-items:center; gap:8px; font-size:14px; font-weight:600; color:var(--text-sec)">
+                                  <span class="status-chip ${STATUS_COLORS[st]}" style="margin:0; padding:4px 10px;">${st}</span> ${statusCount[st]}
                                 </div>`;
                 }
             }
@@ -516,9 +561,9 @@
         function renderAssets(assetsArray) {
             const container = document.getElementById('assets-container');
             if (assetsArray.length === 0) {
-                container.innerHTML = `<div class="glass" style="grid-column: 1/-1; padding: 40px; text-align: center;">
-                    <h3>Seu portfólio começa aqui.</h3>
-                    <p style="color:var(--text-sec); margin-top:10px;">Adicione seu primeiro ativo e comece a acompanhar seu capital.</p>
+                container.innerHTML = `<div class="glass" style="grid-column: 1/-1; padding: 50px; text-align: center;">
+                    <h3 style="font-size:20px;">Seu portfólio começa aqui.</h3>
+                    <p style="color:var(--text-sec); margin-top:12px; font-weight:300;">Adicione seu primeiro ativo e comece a acompanhar seu capital.</p>
                 </div>`;
                 return;
             }
@@ -538,10 +583,10 @@
                     <div class="asset-specs">${a.specs}</div>
                     <div class="status-chip ${STATUS_COLORS[a.status]}">${a.status}</div>
                     
-                    <div style="margin-top:15px; padding-top:15px; border-top:1px solid rgba(0,0,0,0.05);">
+                    <div style="margin-top:20px; padding-top:20px; border-top:1px solid rgba(255,255,255,0.05);">
                         <div class="fin-row"><span>Investido</span> <span>${fmtMoney(cost)}</span></div>
                         <div class="fin-row"><span>${finalLabel}</span> <span>${fmtMoney(finalVal)}</span></div>
-                        <div class="fin-row"><span>Lucro</span> <span class="val-positive">+${fmtMoney(profit)}</span></div>
+                        <div class="fin-row" style="margin-top:10px;"><span>Lucro</span> <span class="val-positive" style="font-size:16px;">+${fmtMoney(profit)}</span></div>
                     </div>
                 </div>`;
             }).join('');
@@ -556,13 +601,15 @@
                 return `
                 <div class="kanban-col">
                     <div class="k-header">${col} (${colAssets.length})</div>
+                    <div style="display:flex; flex-direction:column; gap:16px; margin-top:10px;">
                     ${colAssets.map(a => `
-                        <div class="glass" style="padding:15px; cursor:pointer;" onclick="openAssetDetail('${a.id}')">
-                            <div style="font-size:11px; color:var(--text-sec);">${a.id}</div>
-                            <div style="font-weight:600; font-size:14px; margin:4px 0;">${a.name}</div>
-                            <div style="font-size:12px; color:var(--success);">+${fmtMoney(calcProfit(a))} est.</div>
+                        <div class="glass" style="padding:20px; cursor:pointer; transition:0.3s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'" onclick="openAssetDetail('${a.id}')">
+                            <div style="font-size:11px; color:var(--text-sec); font-weight:700;">${a.id}</div>
+                            <div style="font-weight:600; font-size:16px; margin:6px 0;">${a.name}</div>
+                            <div style="font-size:14px; color:var(--success); font-weight:600;">+${fmtMoney(calcProfit(a))} est.</div>
                         </div>
                     `).join('')}
+                    </div>
                 </div>`;
             }).join('');
         }
@@ -577,72 +624,72 @@
             const isSold = a.status === 'Vendido';
 
             let html = `
-                <div class="detail-header glass" style="padding:30px;">
+                <div class="detail-header glass" style="padding:40px;">
                     <img src="${a.image || DEFAULT_IMG}" class="detail-img">
                     <div class="detail-info">
-                        <div style="font-size:13px; color:var(--text-sec); font-weight:600;">${a.id}</div>
-                        <h2 style="font-size:32px; margin:5px 0;">${a.name}</h2>
-                        <p style="color:var(--text-sec); margin-bottom: 20px;">${a.specs}</p>
+                        <div style="font-size:14px; color:var(--text-sec); font-weight:700; letter-spacing:1px;">${a.id}</div>
+                        <h2 style="font-size:36px; margin:8px 0; letter-spacing:-1px;">${a.name}</h2>
+                        <p style="color:var(--text-sec); margin-bottom: 24px; font-size:16px;">${a.specs}</p>
                         
-                        <div style="display:flex; align-items:center; gap:15px; margin-bottom:25px;">
-                            <span class="status-chip ${STATUS_COLORS[a.status]}" style="margin:0; font-size:13px; padding:6px 14px;">${a.status}</span>
-                            ${!isSold ? `<select class="form-control" style="width:auto; padding:6px 12px; height:auto; background:white;" onchange="changeStatus('${a.id}', this.value)">
+                        <div style="display:flex; align-items:center; gap:16px; margin-bottom:30px; flex-wrap:wrap;">
+                            <span class="status-chip ${STATUS_COLORS[a.status]}" style="margin:0; font-size:13px; padding:8px 16px;">${a.status}</span>
+                            ${!isSold ? `<select class="form-control" style="width:auto; padding:8px 16px; height:auto; background:rgba(255,255,255,0.05); color:white; border-color:rgba(255,255,255,0.1); font-weight:600; appearance:none;" onchange="changeStatus('${a.id}', this.value)">
                                 ${STATUS_OPTIONS.map(s => `<option ${s === a.status ? 'selected' : ''}>${s}</option>`).join('')}
                             </select>` : ''}
                         </div>
 
-                        <div class="grid-4" style="margin-bottom:0;">
-                            <div class="stat-card" style="padding:0; background:none; border:none; box-shadow:none;">
+                        <div class="grid-4" style="margin-bottom:0; gap:16px;">
+                            <div class="stat-card" style="padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; border:1px solid rgba(255,255,255,0.05); box-shadow:none;">
                                 <span class="stat-label">Custo Total</span>
                                 <span class="stat-value" style="font-size:24px;">${fmtMoney(cost)}</span>
                             </div>
-                            <div class="stat-card" style="padding:0; background:none; border:none; box-shadow:none;">
+                            <div class="stat-card" style="padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; border:1px solid rgba(255,255,255,0.05); box-shadow:none;">
                                 <span class="stat-label">${isSold ? 'Vendido por' : 'Venda Estimada'}</span>
                                 <span class="stat-value" style="font-size:24px;">${fmtMoney(isSold ? a.finalSale : a.estimatedSale)}</span>
                             </div>
-                            <div class="stat-card" style="padding:0; background:none; border:none; box-shadow:none;">
+                            <div class="stat-card" style="padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; border:1px solid rgba(255,255,255,0.05); box-shadow:none;">
                                 <span class="stat-label">Lucro ${isSold?'Realizado':'Potencial'}</span>
                                 <span class="stat-value val-positive" style="font-size:24px;">+${fmtMoney(profit)}</span>
                             </div>
-                            <div class="stat-card" style="padding:0; background:none; border:none; box-shadow:none;">
+                            <div class="stat-card" style="padding:20px; background:rgba(255,255,255,0.02); border-radius:16px; border:1px solid rgba(255,255,255,0.05); box-shadow:none;">
                                 <span class="stat-label">ROI</span>
                                 <span class="stat-value val-positive" style="font-size:24px;">${calcROI(a)}%</span>
                             </div>
                         </div>
 
-                        <div style="margin-top: 30px; display:flex; gap:10px;">
-                            ${!isSold ? `<button class="btn btn-primary" onclick="openCostModal('${a.id}')"><i class="fa-solid fa-screwdriver-wrench"></i> Add Gasto</button>
-                                         <button class="btn btn-primary" style="background:var(--sold);" onclick="openSaleModal('${a.id}')"><i class="fa-solid fa-check-double"></i> Marcar Vendido</button>` : ''}
-                            <button class="btn btn-secondary" style="color:var(--danger);" onclick="deleteAsset('${a.id}')"><i class="fa-solid fa-trash"></i></button>
+                        <div style="margin-top: 32px; display:flex; gap:12px; flex-wrap:wrap;">
+                            ${!isSold ? `<button class="btn btn-primary" style="background:rgba(255,255,255,0.1); color:white;" onclick="openCostModal('${a.id}')"><i class="fa-solid fa-screwdriver-wrench"></i> Gasto</button>
+                                         <button class="btn btn-primary" style="background:var(--sold); color:white;" onclick="openSaleModal('${a.id}')"><i class="fa-solid fa-check-double"></i> Marcar Vendido</button>` : ''}
+                            <button class="btn btn-secondary" style="color:var(--danger); border-color:rgba(255,42,42,0.3);" onclick="deleteAsset('${a.id}')"><i class="fa-solid fa-trash"></i></button>
                         </div>
                     </div>
                 </div>
 
-                <div class="glass" style="padding: 30px;">
+                <div class="glass" style="padding: 40px;">
                     <div class="tabs">
                         <div class="tab active" onclick="switchTab(this, 'tab-fin')">Financeiro Detalhado</div>
                         <div class="tab" onclick="switchTab(this, 'tab-hist')">Histórico & Info</div>
                     </div>
                     
                     <div id="tab-fin" class="tab-content active">
-                        <h3 style="margin-bottom:15px; font-size:16px;">Custos e Reparos</h3>
+                        <h3 style="margin-bottom:20px; font-size:18px;">Custos e Reparos</h3>
                         <div class="cost-list">
                             ${a.costs.map(c => `
                                 <div class="cost-item">
-                                    <span><strong>${c.desc}</strong> <span style="color:var(--text-sec); font-size:12px; margin-left:10px;">${fmtDate(c.date)}</span></span>
-                                    <span style="font-weight:600;">${fmtMoney(c.val)}</span>
+                                    <span><strong style="color:white;">${c.desc}</strong> <span style="color:var(--text-sec); font-size:13px; margin-left:12px;">${fmtDate(c.date)}</span></span>
+                                    <span style="font-weight:600; font-size:16px;">${fmtMoney(c.val)}</span>
                                 </div>
                             `).join('')}
-                            <div class="cost-item" style="background:rgba(0,0,0,0.8); color:white;">
+                            <div class="cost-item" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.2);">
                                 <span>Custo Total</span>
-                                <span style="font-weight:600;">${fmtMoney(cost)}</span>
+                                <span style="font-weight:700; font-size:18px; color:var(--text-main);">${fmtMoney(cost)}</span>
                             </div>
                         </div>
                     </div>
 
                     <div id="tab-hist" class="tab-content">
-                        <p style="margin-bottom:25px; line-height:1.6;"><strong>Descrição:</strong><br>${a.desc}</p>
-                        <h3 style="margin-bottom:15px; font-size:16px;">Linha do Tempo</h3>
+                        <p style="margin-bottom:30px; line-height:1.8; color:var(--text-sec); font-size:15px;"><strong style="color:white;">Descrição Inicial:</strong><br>${a.desc}</p>
+                        <h3 style="margin-bottom:24px; font-size:18px;">Linha do Tempo</h3>
                         <div class="timeline">
                             ${a.timeline.slice().reverse().map(t => `
                                 <div class="t-item">
@@ -680,7 +727,7 @@
             a.status = newStatus;
             a.timeline.push({ date: new Date().toISOString().split('T')[0], title: "Status alterado", desc: `Mudou para: ${newStatus}` });
             saveData();
-            openAssetDetail(id); // reload
+            openAssetDetail(id);
         }
 
         function deleteAsset(id) {
@@ -742,7 +789,6 @@
             openAssetDetail(id);
         }
 
-        // Image compression before saving to LocalStorage
         function compressImage(file, callback) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -751,7 +797,7 @@
                 img.src = event.target.result;
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 600; // Keep small for localstorage
+                    const MAX_WIDTH = 600; 
                     const scaleSize = MAX_WIDTH / img.width;
                     canvas.width = MAX_WIDTH;
                     canvas.height = img.height * scaleSize;
@@ -842,11 +888,21 @@
             }
         }
 
+        // Click fora do modal fecha no mobile (comportamento de bottom sheet)
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
         // Init
         document.getElementById('asset-date').value = new Date().toISOString().split('T')[0];
         updateApp();
 
     </script>
 </body>
+</html>
 </html>
 
